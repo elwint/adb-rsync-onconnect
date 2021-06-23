@@ -10,7 +10,7 @@ adb -s $SERIAL shell -x '/data/local/tmp/rsync --daemon --no-detach --config=/sd
 adb -s $SERIAL shell 'until pidof rsync > /dev/null; do sleep .1; done'
 adb -s $SERIAL forward tcp:6010 tcp:1873
 
-rsync -rt --delete --progress "rsync://localhost:6010$SOURCE" "$DEST" |
+rsync -rt --delete --progress --no-inc-recursive "rsync://localhost:6010$SOURCE" "$DEST" |
 	awk -f rsync.awk |
 	zenity --progress --title "Synchronizing files..." --time-remaining \
 		--text="Scanning..." --percentage=0 --auto-close &
