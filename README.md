@@ -7,6 +7,8 @@
 
 ### Installation
 
+**WARNING: All files in the destination folder are deleted if they don't exists in the source folder. To prevent this, remove `--delete` in `sync.sh`**
+
 Connect device and run:
 
 ```
@@ -16,8 +18,6 @@ Connect device and run:
 E.g. `./install.sh /sdcard/DCIM/Camera/ ~/Pictures/Phone`
 
 Every time the device is connected, `sync.sh` will be automatically executed to synchronize the files.
-
-**All files in the destination folder are deleted if they don't exists in the source folder. To prevent this, remove --delete in `sync.sh`**
 
 ### Uninstallation
 
