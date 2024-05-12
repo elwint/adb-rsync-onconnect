@@ -7,8 +7,12 @@ timeout 5 adb -s $SERIAL wait-for-device || exit 1
 adb -s $SERIAL shell cp /sdcard/rsync.bin /data/local/tmp/rsync &&
 adb -s $SERIAL shell chmod 755 /data/local/tmp/rsync &&
 adb -s $SERIAL shell -x '/data/local/tmp/rsync --daemon --config=/sdcard/rsyncd.conf --log-file=/proc/self/fd/2'
-sleep .1
 adb -s $SERIAL forward tcp:6010 tcp:1873
+
+# Wait for rsync daemon to be ready (10s timeout)
+until rsync -n rsync://localhost:6010 > /dev/null || ((i++ >= 100)); do
+  sleep .1
+done
 
 (
   rsync -rt  --progress --no-inc-recursive "rsync://localhost:6010$SOURCE" "$DEST" |
